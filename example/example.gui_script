@@ -1,20 +1,9 @@
-# Pack
-Compress, decompress, and obfuscate table data with Defold
-
-## Installation
-You can use Pack in your own project by adding this project as a [Defold library dependency](http://www.defold.com/manuals/libraries/). Open your game.project file and in the dependencies field under project add:
-
-	https://github.com/subsoap/pack/archive/master.zip
-
-Once added, you must require the main Lua module in scripts via
-
-```
 local pack = require("pack.pack")
-```
 
-## Usage
 
-```
+function init(self)
+	msg.post("@render:", "clear_color", { color = vmath.vector4(0/255, 168/255, 87/255, 1) } )
+
 	pack.set_obfuscation_key("my_secret_key")
 	pack.set_obfuscation_flag(true)
 	
@@ -39,4 +28,28 @@ local pack = require("pack.pack")
 	pprint(my_table_2)
 	my_table_3 = pack.decompress(my_table_2)
 	pprint(my_table_3)
-```
+	
+end
+
+function final(self)
+
+end
+
+function update(self, dt)
+
+end
+
+function on_message(self, message_id, message, sender)
+	-- Add message-handling code here
+	-- Remove this function if not needed
+end
+
+function on_input(self, action_id, action)
+	-- Add input-handling code here
+	-- Remove this function if not needed
+end
+
+function on_reload(self)
+	-- Add input-handling code here
+	-- Remove this function if not needed
+end
