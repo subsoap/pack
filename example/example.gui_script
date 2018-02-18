@@ -4,7 +4,7 @@ local pack = require("pack.pack")
 function init(self)
 	msg.post("@render:", "clear_color", { color = vmath.vector4(0/255, 168/255, 87/255, 1) } )
 
-	pack.set_obfuscation_key("my_secret_key")
+	pack.set_obfuscation_key("my_very_extremely_super_duper_secret_key_for_pack")
 	pack.set_obfuscation_flag(true)
 	
 	--- Obfuscate Text
