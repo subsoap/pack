@@ -14,8 +14,9 @@ function M.set_obfuscation_flag(flag)
 end
 
 -- xor key based obfuscation - the input must be a string
-function M.obfuscate(input, key)
-	if M.enable_obfuscation == false then return input end
+function M.obfuscate(input, key, force_obfuscation)
+	force_obfuscation = force_obfuscation or false
+	if M.enable_obfuscation == false and not force_obfuscation then return input end
 	key = key or M.obfuscation_key
 	local output = ""
 	local key_iterator = 1
@@ -38,19 +39,21 @@ end
 -- We don't want achievement data easy to edit
 -- So we use simple zlib inflate/deflate to make it
 -- just a little harder to edit
-function M.decompress(buffer, key)
+function M.decompress(buffer, key, force_obfuscation)
+	force_obfuscation = force_obfuscation or false
 	obfuscation_key = key or M.obfuscation_key
 	if buffer == nil then return {} end
 	buffer = zlib.inflate(buffer)
-	buffer = M.obfuscate(buffer, obfuscation_key)
+	buffer = M.obfuscate(buffer, obfuscation_key, force_obfuscation)
 	buffer = json.decode(buffer)
 	return buffer
 end
 
-function M.compress(buffer, key)
+function M.compress(buffer, key, force_obfuscation)
+	force_obfuscation = force_obfuscation or false
 	obfuscation_key = key or M.obfuscation_key
 	buffer = json.encode(buffer)
-	buffer = M.obfuscate(buffer, obfuscation_key)
+	buffer = M.obfuscate(buffer, obfuscation_key, force_obfuscation)
 	buffer = zlib.deflate(buffer)
 	return buffer
 end

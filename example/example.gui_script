@@ -5,13 +5,13 @@ function init(self)
 	msg.post("@render:", "clear_color", { color = vmath.vector4(0/255, 168/255, 87/255, 1) } )
 
 	pack.set_obfuscation_key("my_very_extremely_super_duper_secret_key_for_pack")
-	pack.set_obfuscation_flag(true)
+	pack.set_obfuscation_flag(false)
 	
 	--- Obfuscate Text
 	
 	thing_1 = "DEFOLD"
-	thing_2 = pack.obfuscate(thing_1)
-	thing_3 = pack.obfuscate(thing_2)
+	thing_2 = pack.obfuscate(thing_1, nil, true)
+	thing_3 = pack.obfuscate(thing_2, nil, true)
 	print(thing_3)
 	
 	text = thing_1
@@ -20,6 +20,8 @@ function init(self)
 	
 	gui.set_text(gui.get_node("text"), text)
 
+	pack.set_obfuscation_flag(true)
+	
 	--- Compress / Decompress Tables
 	
 	my_table = {text = "this is text"}
