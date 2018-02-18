@@ -5,6 +5,22 @@ local M = {}
 M.enable_obfuscation = false -- if true then all data saved and loaded will be XOR obfuscated - FASTER
 M.obfuscation_key = "pack" -- pick a unique obfuscation key, the longer the key for obfuscation the better
 
+local function is_string(input)
+	if type(input) == "string" then 
+		return true 
+	else 
+		return false 
+	end
+end
+
+local function is_table(input)
+	if type(input) == "table" then 
+		return true 
+	else 
+		return false 
+	end
+end
+
 function M.set_obfuscation_key(key)
 	M.obfuscation_key = key
 end
@@ -15,6 +31,7 @@ end
 
 -- xor key based obfuscation - the input must be a string
 function M.obfuscate(input, key, force_obfuscation)
+	assert(input and is_string(input), "Pack: pack.obfuscate requires a string for input")
 	force_obfuscation = force_obfuscation or false
 	if M.enable_obfuscation == false and not force_obfuscation then return input end
 	key = key or M.obfuscation_key
@@ -36,10 +53,8 @@ function M.obfuscate(input, key, force_obfuscation)
 	return output
 end
 
--- We don't want achievement data easy to edit
--- So we use simple zlib inflate/deflate to make it
--- just a little harder to edit
 function M.decompress(buffer, key, force_obfuscation)
+	assert(buffer and is_string(buffer), "Pack: pack.decompress requires a string for its buffer")
 	force_obfuscation = force_obfuscation or false
 	obfuscation_key = key or M.obfuscation_key
 	if buffer == nil then return {} end
@@ -50,6 +65,7 @@ function M.decompress(buffer, key, force_obfuscation)
 end
 
 function M.compress(buffer, key, force_obfuscation)
+	assert(buffer and is_table(buffer), "Pack: pack.compress requires a table for its buffer")
 	force_obfuscation = force_obfuscation or false
 	obfuscation_key = key or M.obfuscation_key
 	buffer = json.encode(buffer)
