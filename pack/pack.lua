@@ -1,4 +1,5 @@
 local json = require("pack.json")
+local crc32 = require("pack.crc32")
 
 local M = {}
 
@@ -72,6 +73,10 @@ function M.compress(buffer, key, force_obfuscation)
 	buffer = M.obfuscate(buffer, obfuscation_key, force_obfuscation)
 	buffer = zlib.deflate(buffer)
 	return buffer
+end
+
+function M.crc32_hash(input)
+	return crc32.hash(input)
 end
 
 return M

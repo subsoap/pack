@@ -30,6 +30,8 @@ function init(self)
 	pprint(my_table_2)
 	my_table_3 = pack.decompress(my_table_2)
 	pprint(my_table_3)
+
+	print(pack.crc32_hash("defold")) -- should be AD24B1FA
 	
 end
 
